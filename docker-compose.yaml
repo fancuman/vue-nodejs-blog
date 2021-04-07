@@ -1,0 +1,42 @@
+version: '3'
+services:
+  # frontend:
+  #   container_name: frontend
+  #   build:
+  #     context: ./frontend
+  #   volumes:
+  #     - ./frontend:/app
+  #     - /app/node_modules
+  #   environment:  
+  #     - VUE_APP_BACKEND_URL=http://localhost:80/api/todos
+
+  backend:
+    container_name: backend 
+    build: 
+      context: ./backend
+    depends_on:
+      - db  
+    volumes:
+      - ./backend:/usr/app
+      - /usr/app/node_modules
+    environment:  
+      - MONGO_URL=mongodb://db:27017/todos
+      - APP_PORT=3000
+    ports: ['3000:3000']
+
+  db:
+    container_name: db
+    image: mongo:4.0
+    restart: always
+
+  frontend-web:
+    container_name: frontend-web
+    image: nginx
+    restart: always
+    ports:
+      - 3010:80
+    # depends_on:
+    #   - frontend
+    volumes: 
+      - ./nginx.conf:/etc/nginx/nginx.conf  #nginx configuration
+      - ./frontend/dist:/usr/share/nginx/html/    #serve generated frontend web files

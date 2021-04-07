@@ -1,0 +1,11 @@
+version: '3'
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:  
+      - VUE_APP_BACKEND_URL=http://localhost:80/api/todos
