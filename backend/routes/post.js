@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/', auth, async (req, res) => {
     const post = new Post({
         ...req.body,
-        owner: req.user._id
+        authorId: req.user._id
     })
 
     try {
@@ -28,7 +28,7 @@ router.patch('/:id', auth, async (req, res) => {
     }
 
     try {
-        const post = await Post.findOne({ _id: req.params.id, autherId: req.user._id })
+        const post = await Post.findOne({ _id: req.params.id, authorId: req.user._id })
 
         if (!post) {
             return res.status(404).send()
@@ -44,7 +44,7 @@ router.patch('/:id', auth, async (req, res) => {
 
 router.delete('/:id', auth, async (req, res) => {
     try {
-        const post = await Post.findOneAndDelete({ _id: req.params.id, owner: req.user._id })
+        const post = await Post.findOneAndDelete({ _id: req.params.id, authorId: req.user._id })
 
         if (!post) {
             res.status(404).send()
@@ -82,11 +82,11 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/:id', auth, async (req, res) => {
+router.get('/:id', async (req, res) => {
     const _id = req.params.id
 
     try {
-        const post = await Post.findOne({ _id, authorId: req.user._id })
+        const post = await Post.findOne({ _id })
 
         if (!post) {
             return res.status(404).send()

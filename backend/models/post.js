@@ -7,7 +7,7 @@ const postSchema = new Schema({
     type: String,
   },
   content: {
-    type: Boolean,
+    type: String,
   },
   authorId: {
     type: mongoose.Schema.Types.ObjectId,
