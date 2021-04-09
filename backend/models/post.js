@@ -9,7 +9,7 @@ const postSchema = new Schema({
   content: {
     type: Boolean,
   },
-  writerId: {
+  authorId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'User'

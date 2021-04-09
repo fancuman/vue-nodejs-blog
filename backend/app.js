@@ -10,6 +10,8 @@ const config = require('./config/Config');
 
 const routes = require('./routes/Routes');
 const user = require('./routes/user')
+const post = require('./routes/post')
+const comment = require('./routes/comment')
 
 const app = express();
 
@@ -27,7 +29,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/todos', routes);
-app.use('/user', user);
+app.use('/users', user);
+app.use('/posts', post);
+app.use('/comments', comment);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -21,7 +21,7 @@ router.post('/login', async (req, res) => {
         const token = await user.generateAuthToken()
         res.send({ user, token })
     } catch (e) {
-        res.status(400).send()
+        res.status(400).send(e)
     }
 })
 
@@ -48,11 +48,11 @@ router.post('/logoutAll', auth, async (req, res) => {
     }
 })
 
-router.get('/me', auth, async (req, res) => {
+router.get('/', auth, async (req, res) => {
     res.send(req.user)
 })
 
-router.patch('/me', auth, async (req, res) => {
+router.patch('/', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -70,7 +70,7 @@ router.patch('/me', auth, async (req, res) => {
     }
 })
 
-router.delete('/users/me', auth, async (req, res) => {
+router.delete('/', auth, async (req, res) => {
     try {
         await req.user.remove()
         res.send(req.user)
